@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>港途移民 - 伴您安家每一步</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Noto Sans SC"', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            blue: '#0B1120', // 深蓝背景
+                            lightBlue: '#1a2744', // 稍微亮一点的蓝用于卡片
+                            gold: '#D4AF37', // 奢华金
+                            goldHover: '#B5952F',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* 自定义滚动条 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0B1120;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1a2744; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #D4AF37; 
+        }
+
+        /* 动画类 */
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .gold-gradient-text {
+            background: linear-gradient(to right, #D4AF37, #F3E5AB, #D4AF37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: shine 3s linear infinite;
+        }
+
+        @keyframes shine {
+            to {
+                background-position: 200% center;
+            }
+        }
+        
+        /* FAQ Accordion Transition */
+        details > summary {
+            list-style: none;
+        }
+        details > summary::-webkit-details-marker {
+            display: none;
+        }
+        details[open] summary ~ * {
+            animation: sweep .3s ease-in-out;
+        }
+        @keyframes sweep {
+            0%    {opacity: 0; transform: translateY(-10px)}
+            100%  {opacity: 1; transform: translateY(0)}
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans antialiased">
+
+    <!-- 导航栏 -->
+    <nav class="fixed w-full z-50 transition-all duration-300 bg-brand-blue/95 backdrop-blur-md border-b border-white/10" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <div class="w-10 h-10 bg-brand-gold rounded-full flex items-center justify-center text-brand-blue font-bold text-xl">
+                        港
+                    </div>
+                    <span class="text-2xl font-bold text-white tracking-wider">港途 <span class="text-brand-gold text-sm font-normal">GANGTU</span></span>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-6 lg:space-x-8">
+                        <a href="#home" class="text-gray-300 hover:text-brand-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">首页</a>
+                        <a href="#story" class="text-gray-300 hover:text-brand-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">品牌故事</a>
+                        <a href="#services" class="text-gray-300 hover:text-brand-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">核心优势</a>
+                        <a href="#process" class="text-gray-300 hover:text-brand-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">服务流程</a>
+                        <a href="#cases" class="text-gray-300 hover:text-brand-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">成功案例</a>
+                        <a href="#faq" class="text-gray-300 hover:text-brand-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">常见问题</a>
+                        <a href="#contact" class="bg-brand-gold hover:bg-brand-goldHover text-brand-blue px-6 py-2 rounded-full text-sm font-bold transition-all transform hover:scale-105 shadow-lg shadow-brand-gold/20">
+                            立即评估
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="-mr-2 flex md:hidden">
+                    <button type="button" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="bg-transparent inline-flex items-center justify-center p-2 rounded-md text-brand-gold hover:text-white focus:outline-none">
+                        <i data-lucide="menu" class="w-8 h-8"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu (Dropdown) -->
+        <div class="hidden md:hidden bg-brand-blue border-t border-gray-800" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 shadow-xl">
+                <a href="#home" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="text-gray-300 hover:text-brand-gold block px-3 py-2 rounded-md text-base font-medium">首页</a>
+                <a href="#story" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="text-gray-300 hover:text-brand-gold block px-3 py-2 rounded-md text-base font-medium">品牌故事</a>
+                <a href="#services" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="text-gray-300 hover:text-brand-gold block px-3 py-2 rounded-md text-base font-medium">核心优势</a>
+                <a href="#process" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="text-gray-300 hover:text-brand-gold block px-3 py-2 rounded-md text-base font-medium">服务流程</a>
+                <a href="#cases" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="text-gray-300 hover:text-brand-gold block px-3 py-2 rounded-md text-base font-medium">成功案例</a>
+                <a href="#faq" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="text-gray-300 hover:text-brand-gold block px-3 py-2 rounded-md text-base font-medium">常见问题</a>
+                <a href="#contact" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="text-brand-blue bg-brand-gold block px-3 py-2 rounded-md text-base font-bold mt-4 text-center">立即咨询</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 首屏 Hero Section -->
+    <section id="home" class="relative min-h-screen flex items-center justify-center bg-brand-blue overflow-hidden pt-20">
+        <!-- 背景装饰 -->
+        <div class="absolute inset-0 z-0">
+            <div class="absolute top-0 left-0 w-full h-full bg-[url('https://images.unsplash.com/photo-1506318137071-a8bcbf6755dd?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-20 mix-blend-overlay"></div>
+            <div class="absolute inset-0 bg-gradient-to-b from-brand-blue/80 via-brand-blue/90 to-brand-blue"></div>
+            <!-- 金色光晕效果 -->
+            <div class="absolute top-1/4 right-1/4 w-96 h-96 bg-brand-gold/10 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-brand-blue to-transparent"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 fade-in-up">
+                <span class="block text-white mb-2">港途移民</span>
+                <span class="block gold-gradient-text">伴您安家每一步</span>
+            </h1>
+            
+            <p class="mt-6 max-w-2xl mx-auto text-xl text-gray-300 fade-in-up delay-100 font-light">
+                连接香港，连接未来。专业护航您的移居之旅。
+            </p>
+
+            <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4 fade-in-up delay-200">
+                <a href="#contact" class="px-8 py-4 border border-transparent text-lg font-bold rounded-md text-brand-blue bg-brand-gold hover:bg-brand-goldHover md:py-4 md:text-xl md:px-10 transition-all shadow-lg shadow-brand-gold/30">
+                    开启移民评估
+                </a>
+                <a href="#services" class="px-8 py-4 border border-brand-gold/50 text-lg font-medium rounded-md text-brand-gold hover:bg-brand-gold/10 md:py-4 md:text-xl md:px-10 transition-all">
+                    了解服务流程
+                </a>
+            </div>
+        </div>
+        
+        <!-- 向下滚动指示器 -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce cursor-pointer" onclick="document.getElementById('story').scrollIntoView()">
+            <i data-lucide="chevron-down" class="text-brand-gold w-8 h-8"></i>
+        </div>
+    </section>
+
+    <!-- 品牌故事 Brand Story -->
+    <section id="story" class="py-20 bg-brand-blue relative">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <div class="inline-block p-3 rounded-full bg-brand-gold/10 mb-6">
+                <i data-lucide="anchor" class="w-8 h-8 text-brand-gold"></i>
+            </div>
+            <h2 class="text-3xl font-bold text-white mb-8">为什么是「港途」？</h2>
+            <div class="prose prose-lg prose-invert mx-auto">
+                <p class="text-gray-300 leading-relaxed text-lg italic border-l-4 border-brand-gold pl-6 text-left">
+                    “每一个离港的旅程，都承载着一个家庭对未来的期盼。<br><br>
+                    <span class="text-brand-gold font-bold">‘港’</span> 是我们共同的起点与情感的锚点；<br>
+                    <span class="text-brand-gold font-bold">‘途’</span> 是你们勇敢迈出的每一步，也是我们专业护航的每一程。<br><br>
+                    <span class="text-white font-medium">‘港途’，不只是一家公司，更是您通往新生活的同行者。”</span>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 核心优势 USP Section -->
+    <section id="services" class="py-24 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-brand-blue sm:text-4xl">核心优势</h2>
+                <p class="mt-4 text-xl text-gray-500">不仅仅是代办，更是策略专家</p>
+                <div class="w-24 h-1 bg-brand-gold mx-auto mt-6 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <!-- Card 1 -->
+                <div class="bg-white rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 group border border-gray-100">
+                    <div class="w-16 h-16 bg-brand-blue/5 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-brand-blue transition-colors duration-300">
+                        <i data-lucide="briefcase" class="w-8 h-8 text-brand-blue group-hover:text-brand-gold transition-colors duration-300"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-brand-blue mb-4">港方视角</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        我们不仅仅熟悉流程，更懂审核背后的逻辑。团队包含前香港HR及本土行业专家，用港人思维优化您的申请材料，挖掘您在香港市场的真实价值。
+                    </p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-white rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 group border border-gray-100">
+                    <div class="w-16 h-16 bg-brand-blue/5 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-brand-blue transition-colors duration-300">
+                        <i data-lucide="shield" class="w-8 h-8 text-brand-blue group-hover:text-brand-gold transition-colors duration-300"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-brand-blue mb-4">拒签复盘</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        不仅做顺风局，更擅长逆风翻盘。针对曾被拒签的疑难杂症，提供深度复盘报告，精准定位问题，重新制定策略，化劣势为特色。
+                    </p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-white rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 group border border-gray-100">
+                    <div class="w-16 h-16 bg-brand-blue/5 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-brand-blue transition-colors duration-300">
+                        <i data-lucide="user-check" class="w-8 h-8 text-brand-blue group-hover:text-brand-gold transition-colors duration-300"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-brand-blue mb-4">安家服务</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        获批只是开始，生活才是目的。从子女择校、租房买房到证件办理，我们提供一站式落地服务，做您在香港最可靠的“本地朋友”。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 服务流程 Process Section (NEW) -->
+    <section id="process" class="py-24 bg-brand-blue relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-white sm:text-4xl">服务流程</h2>
+                <p class="mt-4 text-xl text-gray-300">标准化作业，透明化進度</p>
+            </div>
+            
+            <div class="relative">
+                <!-- Connecting Line (Desktop) -->
+                <div class="hidden md:block absolute top-1/2 left-0 w-full h-0.5 bg-brand-gold/30 -translate-y-1/2 z-0"></div>
+
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <!-- Step 1 -->
+                    <div class="relative z-10 bg-brand-lightBlue p-6 rounded-xl border border-gray-700 text-center hover:border-brand-gold transition-colors duration-300">
+                        <div class="w-12 h-12 bg-brand-gold text-brand-blue font-bold text-xl rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg shadow-brand-gold/50">1</div>
+                        <h4 class="text-lg font-bold text-white mb-2">免费评估</h4>
+                        <p class="text-sm text-gray-400">填写评估表，专家團隊會在24小時內分析您的背景優勢。</p>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="relative z-10 bg-brand-lightBlue p-6 rounded-xl border border-gray-700 text-center hover:border-brand-gold transition-colors duration-300">
+                        <div class="w-12 h-12 bg-brand-blue border-2 border-brand-gold text-brand-gold font-bold text-xl rounded-full flex items-center justify-center mx-auto mb-4">2</div>
+                        <h4 class="text-lg font-bold text-white mb-2">定制方案</h4>
+                        <p class="text-sm text-gray-400">簽約合作，深度挖掘亮點，量身定制申請文書與遞交策略。</p>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="relative z-10 bg-brand-lightBlue p-6 rounded-xl border border-gray-700 text-center hover:border-brand-gold transition-colors duration-300">
+                        <div class="w-12 h-12 bg-brand-blue border-2 border-brand-gold text-brand-gold font-bold text-xl rounded-full flex items-center justify-center mx-auto mb-4">3</div>
+                        <h4 class="text-lg font-bold text-white mb-2">文书递交</h4>
+                        <p class="text-sm text-gray-400">整理完整證明材料，進行合規性審核後正式向入境處遞交。</p>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="relative z-10 bg-brand-lightBlue p-6 rounded-xl border border-gray-700 text-center hover:border-brand-gold transition-colors duration-300">
+                        <div class="w-12 h-12 bg-brand-blue border-2 border-brand-gold text-brand-gold font-bold text-xl rounded-full flex items-center justify-center mx-auto mb-4">4</div>
+                        <h4 class="text-lg font-bold text-white mb-2">获批安家</h4>
+                        <p class="text-sm text-gray-400">獲得批准信，協助辦理簽證與身份證，啟動後續安家服務。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 成功案例 Success Cases -->
+    <section id="cases" class="py-24 bg-gray-50 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-brand-blue sm:text-4xl">成功案例</h2>
+                <p class="mt-4 text-xl text-gray-500">真实的数据，是我们实力的最好证明</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                
+                <!-- Case 1: Ms. Li -->
+                <div class="bg-white rounded-xl overflow-hidden border border-gray-200 hover:shadow-2xl transition-all duration-300 flex flex-col shadow-lg">
+                    <div class="p-8 flex-1">
+                        <div class="flex justify-between items-start mb-6">
+                            <div>
+                                <h3 class="text-2xl font-bold text-brand-blue">李女士 - <span class="text-brand-gold">优才计划</span></h3>
+                                <p class="text-sm text-gray-500 mt-1">行业：市场营销 | 状态：已获批</p>
+                            </div>
+                            <div class="text-right">
+                                <span class="block text-3xl font-bold text-brand-gold">3个月</span>
+                                <span class="text-xs text-gray-400 uppercase tracking-widest">获批周期</span>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4">
+                            <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded-r-md">
+                                <span class="flex items-center text-red-600 font-bold mb-1"><i data-lucide="x-circle" class="w-4 h-4 mr-2"></i> 痛点</span>
+                                <p class="text-gray-600 text-sm">背景较大众化，缺乏明显的行业顶尖奖项，首次自我申请时定位模糊，未能通过。</p>
+                            </div>
+                            
+                            <div class="bg-emerald-50 border-l-4 border-emerald-500 p-4 rounded-r-md">
+                                <span class="flex items-center text-emerald-600 font-bold mb-1"><i data-lucide="check-circle" class="w-4 h-4 mr-2"></i> 策略：重塑定位</span>
+                                <p class="text-gray-600 text-sm">深挖其在某细分领域的创新贡献，重写文书逻辑，将“普通管理经验”转化为“稀缺的市场开拓能力”。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case 2: Mr. Zhang -->
+                <div class="bg-white rounded-xl overflow-hidden border border-gray-200 hover:shadow-2xl transition-all duration-300 flex flex-col shadow-lg">
+                    <div class="p-8 flex-1">
+                        <div class="flex justify-between items-start mb-6">
+                            <div>
+                                <h3 class="text-2xl font-bold text-brand-blue">张先生 - <span class="text-brand-gold">高才通 (A类)</span></h3>
+                                <p class="text-sm text-gray-500 mt-1">行业：互联网科技 | 状态：已获批</p>
+                            </div>
+                            <div class="text-right">
+                                <span class="block text-3xl font-bold text-brand-gold">仅3天</span>
+                                <span class="text-xs text-gray-400 uppercase tracking-widest">极速获批</span>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4">
+                            <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded-r-md">
+                                <span class="flex items-center text-red-600 font-bold mb-1"><i data-lucide="alert-circle" class="w-4 h-4 mr-2"></i> 痛点</span>
+                                <p class="text-gray-600 text-sm">孩子面临插班升学关键期，时间非常紧迫，对文件准备的准确性要求极高，容不得补件延误。</p>
+                            </div>
+                            
+                            <div class="bg-emerald-50 border-l-4 border-emerald-500 p-4 rounded-r-md">
+                                <span class="flex items-center text-emerald-600 font-bold mb-1"><i data-lucide="zap" class="w-4 h-4 mr-2"></i> 策略：极速通道</span>
+                                <p class="text-gray-600 text-sm">VIP极速通道服务，团队24小时内完成所有收入证明文件的梳理与合规性审查，确保一次性递交无误。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section (NEW) -->
+    <section id="faq" class="py-24 bg-brand-lightBlue">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-white sm:text-4xl">常见问题</h2>
+                <div class="w-24 h-1 bg-brand-gold mx-auto mt-6 rounded-full"></div>
+            </div>
+
+            <div class="space-y-4">
+                <!-- Question 1 -->
+                <details class="group bg-brand-blue rounded-lg border border-gray-700 overflow-hidden">
+                    <summary class="flex justify-between items-center p-6 cursor-pointer text-white font-medium hover:text-brand-gold transition-colors select-none">
+                        <span>香港优才计划和高才通有什么区别？</span>
+                        <span class="transition-transform group-open:rotate-180">
+                            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+                        </span>
+                    </summary>
+                    <div class="px-6 pb-6 text-gray-300 border-t border-gray-700 pt-4">
+                        优才计划主要看重申请人的综合计分（学历、经验、语文能力等），适合各行業人才，審批時間較長（3-9個月）。高才通則針對高收入（年薪250萬港幣以上）或頂尖大學畢業生，審批速度極快（通常1個月內），但對資格要求非常明確剛性。
+                    </div>
+                </details>
+
+                <!-- Question 2 -->
+                <details class="group bg-brand-blue rounded-lg border border-gray-700 overflow-hidden">
+                    <summary class="flex justify-between items-center p-6 cursor-pointer text-white font-medium hover:text-brand-gold transition-colors select-none">
+                        <span>申请过程中需要我本人去香港吗？</span>
+                        <span class="transition-transform group-open:rotate-180">
+                            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+                        </span>
+                    </summary>
+                    <div class="px-6 pb-6 text-gray-300 border-t border-gray-700 pt-4">
+                        在递交申请和审批阶段，您通常无需前往香港，全流程可在线上完成。只有在正式获批后，您需要亲自前往香港办理身份证激活及签证手续，我们会有专人协助您安排行程。
+                    </div>
+                </details>
+
+                <!-- Question 3 -->
+                <details class="group bg-brand-blue rounded-lg border border-gray-700 overflow-hidden">
+                    <summary class="flex justify-between items-center p-6 cursor-pointer text-white font-medium hover:text-brand-gold transition-colors select-none">
+                        <span>如果申请失败，可以再次申请吗？</span>
+                        <span class="transition-transform group-open:rotate-180">
+                            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+                        </span>
+                    </summary>
+                    <div class="px-6 pb-6 text-gray-300 border-t border-gray-700 pt-4">
+                        可以。拒签并不会直接导致终身禁入，但需要非常谨慎地分析拒签原因。我们的「拒签复盘」服务正是为此设计，通过调整策略、补充材料或转换赛道（例如从优才转留学），大大提高二次申请的成功率。
+                    </div>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系我们/Footer CTA -->
+    <section id="contact" class="bg-brand-blue py-20 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-gradient-to-r from-brand-gold/10 to-transparent rounded-3xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between border border-brand-gold/20">
+                <div class="mb-8 md:mb-0 md:mr-8 text-center md:text-left">
+                    <h2 class="text-3xl font-bold text-white mb-4">准备好开启新生活了吗？</h2>
+                    <p class="text-gray-300 mb-6">立即填写表单，获得免费的专业移民评估报告。我们的顾问将在24小时内联系您。</p>
+                </div>
+                
+                <div class="w-full md:w-1/3 bg-white p-6 rounded-xl shadow-lg">
+                    <form class="space-y-4" onsubmit="event.preventDefault(); alert('感谢您的提交！我们的顾问将尽快与您联系。');">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-700">姓名</label>
+                            <input type="text" id="name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-brand-gold focus:ring focus:ring-brand-gold/50 bg-gray-50 p-2 border" placeholder="您的称呼">
+                        </div>
+                        <div>
+                            <label for="phone" class="block text-sm font-medium text-gray-700">联系电话</label>
+                            <input type="tel" id="phone" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-brand-gold focus:ring focus:ring-brand-gold/50 bg-gray-50 p-2 border" placeholder="手机号码">
+                        </div>
+                        <div>
+                            <label for="intent" class="block text-sm font-medium text-gray-700">意向项目</label>
+                            <select id="intent" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-brand-gold focus:ring focus:ring-brand-gold/50 bg-gray-50 p-2 border">
+                                <option>香港优才计划</option>
+                                <option>香港高才通计划</option>
+                                <option>香港专才计划</option>
+                                <option>留学进修</option>
+                                <option>其他/不确定</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-bold text-brand-blue bg-brand-gold hover:bg-brand-goldHover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-gold transition-all">
+                            免费获取方案
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="mt-16 pt-8 border-t border-gray-800 text-center text-sm text-gray-500">
+                <p>&copy; 2023 港途移民咨询有限公司 Hong Kong Way Immigration. All rights reserved.</p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // 初始化图标
+        lucide.createIcons();
+
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-lg');
+            } else {
+                navbar.classList.remove('shadow-lg');
+            }
+        });
+
+        // 简单的动画触发器 (Intersection Observer)
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in-up');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // 选择所有卡片进行观察
+        document.querySelectorAll('.bg-white.rounded-2xl').forEach((el, index) => {
+            el.style.opacity = '0'; // 初始隐藏
+            el.classList.add(`delay-${(index % 3 + 1) * 100}`); // 错落动画
+            observer.observe(el);
+        });
+        
+        document.querySelectorAll('.bg-brand-blue.rounded-xl').forEach((el) => {
+             el.style.opacity = '0';
+             el.classList.add('fade-in-up');
+             observer.observe(el);
+        });
+        
+        // 观察流程步骤
+        document.querySelectorAll('#process .relative.z-10').forEach((el, index) => {
+             el.style.opacity = '0';
+             el.classList.add('fade-in-up');
+             el.classList.add(`delay-${(index % 4 + 1) * 100}`);
+             observer.observe(el);
+        });
+
+    </script>
+</body>
+</html>
